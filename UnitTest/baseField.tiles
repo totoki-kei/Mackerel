@@ -1,0 +1,8 @@
+;mark	parent	tile	tileFrameX	tileFrameY	tileColor	tileSmashed	wall	wallFrameX	wallFrameX	wallColor	liquid	liquidAmount	wire
+*		0					7						
+b	*	41				N							
+p	*	19	0	252		N							
+C	*	4	0	110									
+T	*	235	*18	0									
+L	*	132	*18	*18									
+-													R
