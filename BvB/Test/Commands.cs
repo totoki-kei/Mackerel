@@ -100,7 +100,7 @@ namespace MackerelPluginSet.BvB.Test {
 				for (int y = cy - size; y <= cy + size; y++) {
 					Terraria.Tile tile = Terraria.Main.tile[x, y] ?? (Terraria.Main.tile[x, y] = new Terraria.Tile());
 					tile.type = tileType;
-					tile.tileHeader |= 0x01;
+					tile.bTileHeader |= 0x01;
 					tile.wire(x == cx - size || y == cy - size || x == cx + size || y == cy + size);
 	//				Terraria.Main.tile[x, y] = new Tile();
 				}

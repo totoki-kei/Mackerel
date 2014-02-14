@@ -6,7 +6,7 @@ using TShockAPI;
 namespace ServerListJp
 {
 //	[ApiVersion(1, 12)]
-	[ApiVersion(1, 14)]
+	[ApiVersion(1, 15)]
 	public class ServerListJp : TerrariaPlugin
 	{
 		private static string author = "haru_arc";
@@ -79,6 +79,7 @@ namespace ServerListJp
 				{
 					properties.registerProperty("Silent", "false");
 				}
+
 			}
 			else
 			{

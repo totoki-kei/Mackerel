@@ -183,11 +183,11 @@ namespace MackerelPluginSet.BvB.Fields {
 					tileModDic[c] += ((t, p) =>
  {
 						if (type == -1) {
-							t.tileHeader &= (byte.MaxValue - 1);
+							t.bTileHeader &= (byte.MaxValue - 1);
 						}
 						else {
 							t.type = (byte)type;
-							t.tileHeader |= 1;
+							t.bTileHeader |= 1;
 						}
 					});
 				}

@@ -112,10 +112,12 @@ namespace ServerListJp
 			string value = null;
 			string value2 = null;
 			string value3 = null;
+			string value4 = null;
 			ServerListJp.prop.TryGetValue("ServerName", out text);
 			ServerListJp.prop.TryGetValue("Description", out value);
 			ServerListJp.prop.TryGetValue("HostName", out value2);
 			ServerListJp.prop.TryGetValue("ServerWeb", out value3);
+			ServerListJp.prop.TryGetValue("Type", out value4); // ++
 			Hashtable hashtable = new Hashtable();
 			hashtable["data[Server][regist]"] = regist;
 			hashtable["data[Server][worldname]"] = ((text == null || text == "") ? Main.worldName : text);
@@ -127,7 +129,7 @@ namespace ServerListJp
 			hashtable["data[Server][url]"] = value3;
 			hashtable["data[Server][version]"] = "1";
 			hashtable["data[Server][port]"] = Netplay.serverPort;
-			hashtable["data[Server][type]"] = "2";
+			hashtable["data[Server][type]"] = value4 ?? "2"; // ++
 			this.SubmitData(this.baseUrl + "/add", hashtable);
 		}
 		public int CountConnectedUsers()

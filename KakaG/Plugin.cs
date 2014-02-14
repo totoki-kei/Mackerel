@@ -9,7 +9,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet.KagaG {
 
-	[ApiVersion(1, 14)]
+	[ApiVersion(1, 15)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)

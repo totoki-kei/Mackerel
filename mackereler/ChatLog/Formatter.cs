@@ -42,7 +42,7 @@ namespace MackerelPluginSet.ChatLog {
 
 		}
 
-		private string Format(string format, TS.TSPlayer player, messageBuffer msgBuffer, int id, string text) {
+		private string Format(string format, TS.TSPlayer player, MessageBuffer msgBuffer, int id, string text) {
 			char escape = '\x3000';
 			while (format.Contains(escape)) escape++;
 
@@ -75,7 +75,7 @@ namespace MackerelPluginSet.ChatLog {
 			
 		}
 
-		internal string FormatChat(TS.TSPlayer pl, messageBuffer arg1, int arg2, string arg3) {
+		internal string FormatChat(TS.TSPlayer pl, MessageBuffer arg1, int arg2, string arg3) {
 			return Format(chat, pl, arg1, arg2, arg3);
 		}
 

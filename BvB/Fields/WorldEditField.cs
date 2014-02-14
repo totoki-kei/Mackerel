@@ -39,9 +39,9 @@ namespace MackerelPluginSet.BvB.Fields {
 				Tile tile = new Tile();
 				byte flags = reader.ReadByte();
 				byte flags2 = reader.ReadByte();
-				tile.tileHeader = (byte)(flags & 0xf1);
-				tile.tileHeader2 = (byte)(flags2 & 0x03);
-				tile.tileHeader3 = (byte)(flags2 & 0x30);
+				tile.bTileHeader = (byte)(flags & 0xf1);
+				tile.bTileHeader2 = (byte)(flags2 & 0x03);
+				tile.bTileHeader3 = (byte)(flags2 & 0x30);
 
 				// Color
 				if ((flags2 & 4) != 0)

@@ -9,7 +9,7 @@ using Terraria;
 using TerrariaApi.Server;
 
 namespace MackerelPluginSet.ChatLog {
-	[ApiVersion(1, 14)]
+	[ApiVersion(1, 15)]
 	public class Plugin : TerrariaPlugin {
 		Settings setting;
 		LogFile log;
@@ -60,7 +60,7 @@ namespace MackerelPluginSet.ChatLog {
 		}
 
 		[Obsolete("Old TShock Version.")]
-		void ServerHooks_Chat(messageBuffer arg1, int arg2, string arg3, System.ComponentModel.HandledEventArgs arg4) {
+		void ServerHooks_Chat(MessageBuffer arg1, int arg2, string arg3, System.ComponentModel.HandledEventArgs arg4) {
 			TS.TSPlayer pl = new TS.TSPlayer(arg1.whoAmI);
 
 			log.Append(format.FormatChat(pl, arg1, arg2, arg3));
