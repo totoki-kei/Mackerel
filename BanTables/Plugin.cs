@@ -89,7 +89,7 @@ namespace MackerelPluginSet.BanTables {
 		}
 
 		public override Version Version {
-			get { return new Version("1.1"); }
+			get { return new Version("1.2"); }
 		}
 		public override string Name {
 			get { return "Mackerel BanTable Plugin"; }

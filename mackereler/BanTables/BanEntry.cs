@@ -18,7 +18,11 @@ namespace MackerelPluginSet.BanTables {
 		}
 
 		public bool IsMatches(TShockAPI.TSPlayer pl) {
-			return Predicate != null ? Predicate(pl, this.Parameter) : false;
+			if (Predicate == null) {
+				TShockAPI.Log.Warn("BanEntry #{0} : invalid judge function (maybe \"judge\" field's value ({1}) will be incorrect.)", Priority, PredicateName);
+				return false;
+			}
+			return Predicate(pl, this.Parameter);
 		}
 
 	}

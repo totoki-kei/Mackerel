@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using TS = TShockAPI;
 
@@ -49,7 +50,7 @@ namespace MackerelPluginSet.BanTables {
 			else if(mode == "add") {
 				// 引数
 				// 1. 優先度(Priority) : 必須
-				// 2. 判定方法(Predicate) : 必須
+				// 2. 判定方法(Predicate) : 必須、選択式
 				// 3. パラメータ(Parameter) : 必須
 				// 4. 判定結果(Judge) : 任意(省略時は"Deny")
 				// 5. 理由(Reason) : 任意(省略時は表示なし)
@@ -76,6 +77,11 @@ namespace MackerelPluginSet.BanTables {
 						goto case 5;
 					default:
 						goto PrintHelp;
+				}
+
+				// predが有効かどうか確認する
+				if(!BanPredicates.FunctionNames.Contains(pred)){
+					goto PrintHelp;
 				}
 
 				var e = new BanEntry(priority, judge, pred, param, reason);
