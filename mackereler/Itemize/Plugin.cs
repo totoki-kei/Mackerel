@@ -12,7 +12,7 @@ namespace MackerelPluginSet.Itemize {
 	/// <summary>
 	/// ダメージを受けたときにアイテムを発生させる
 	/// </summary>
-	[ApiVersion(1, 15)]
+	[ApiVersion(1, 16)]
 	class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)

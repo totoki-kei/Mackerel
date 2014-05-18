@@ -6,7 +6,7 @@ using TerrariaApi.Server;
 
 namespace MackerelPluginSet.BanTables {
 #if true
-	[ApiVersion(1, 15)]
+	[ApiVersion(1, 16)]
 	public class Plugin : TerrariaPlugin {
 		public DBTable DBTable { get; private set; }
 		public Plugin(Main game)

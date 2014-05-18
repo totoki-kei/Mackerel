@@ -6,7 +6,7 @@ using TShockAPI;
 namespace ServerListJp
 {
 //	[ApiVersion(1, 12)]
-	[ApiVersion(1, 15)]
+	[ApiVersion(1, 16)]
 	public class ServerListJp : TerrariaPlugin
 	{
 		private static string author = "haru_arc";
