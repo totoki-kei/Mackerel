@@ -1,0 +1,15 @@
+# This is sample "ItemBroadcast.config" file.
+#
+# Message signature:
+#   %NAME% : Player name
+#   %ITEM% : Item name
+#   %DATE% : Date (formatted yyyy/mm/dd)
+#   %TIME% : Time (formatted HH:MM:SS)
+
+
+# Mechanical Eye
+544=%NAME% uses %ITEM% @ %DATE% %TIME%.
+# Mechanical Worm
+556=%NAME% uses %ITEM% @ %DATE% %TIME%.
+# Mechanical Skull
+557=%NAME% uses %ITEM% @ %DATE% %TIME%.
