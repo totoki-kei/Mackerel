@@ -42,20 +42,17 @@ namespace MackerelPluginSet.BanTables {
 					lines.Add("BanTable entries");
 					int count = 0;
 					foreach (var e in es) {
-						lines.Add(string.Format("{0} {1}({2}) => {3}", e.Priority, e.PredicateName, e.Parameter, e.AllowJudge ? "Allow" : "Deny"));
-						lines.Add(string.Format("     Reason : {0}", e.Reason));
+						string line = string.Format("{0} {1}({2}) => {3}", e.Priority, e.PredicateName, e.Parameter, e.AllowJudge ? "Allow" : "Deny");
+						if (!string.IsNullOrEmpty(e.Reason)) line += string.Format(" Reason : {0}", e.Reason);
+						lines.Add(line);
 						count++;
 					}
 					lines.Add("Total " + count.ToString() + " entries.");
 				}
 
-				{
+				if (args.Parameters.Count >= 2) {
 					int pageNumber;
-					if (!TS.PaginationTools.TryParsePageNumber(args.Parameters, -1, args.Player, out pageNumber) || pageNumber == -1) {
-						// 引数が省略されている時は全件出す
-						foreach (string s in lines) {
-							args.Player.SendInfoMessage(s);
-						}
+					if (!TS.PaginationTools.TryParsePageNumber(args.Parameters, 1, args.Player, out pageNumber)) {
 					}
 					else {
 						TS.PaginationTools.SendPage(args.Player, pageNumber, lines,
@@ -64,6 +61,12 @@ namespace MackerelPluginSet.BanTables {
 								FooterFormat = "Type /banex list {0} for more page."
 							}
 						);
+					}
+				}
+				else {
+					// 引数が省略されている時は全件出す
+					foreach (string s in lines) {
+						args.Player.SendInfoMessage(s);
 					}
 				}
 

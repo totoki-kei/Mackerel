@@ -27,25 +27,17 @@ banexコマンドは、banパーミッションを持つユーザから見える
 表示例：
 　Server executed: /banex list.
 　BanTable entries
-　0 ip(192.168.1.0/24) => Allow
-　     Reason : Local User
-　1000 name(AdminUser) => Allow
-　     Reason : Admin
-　2000 name(TrustedUser1) => Allow
-　     Reason : Safe user.
-　2001 name(TrustedUser2) => Allow
-　     Reason : Friend.
-　8000 hostname(.*\.ocn\.ne\.jp) => Deny
-　     Reason : Your remote host is in blacklist.
-　8001 hostname(softbank.*) => Deny
-　     Reason : Your remote host is in blacklist.
-　10000 name(.*) => Allow
-　     Reason : Allow all user
+　0 ip(192.168.1.0/24) => Allow Reason : Local User
+　1000 name(AdminUser) => Allow Reason : Admin
+　2000 name(TrustedUser1) => Allow Reason : Safe user.
+　2001 name(TrustedUser2) => Allow Reason : Friend.
+　8000 hostname(.*\.ocn\.ne\.jp) => Deny Reason : Your remote host is in blacklist.
+　8001 hostname(softbank.*) => Deny Reason : Your remote host is in blacklist.
+　10000 name(.*) => Allow Reason : Allow all user
 　Total 6 entries.
 
 各エントリの表示内容は以下の通りです：
-　<priority> <function>(<function_arg>) => <judge>
-       Reason : <reason_text>
+　<priority> <function>(<function_arg>) => <judge> [Reason : <reason_text>]
 
 　<priority>
 　　エントリの優先度、兼、ID番号です。数値が小さいほど優先されます。
@@ -68,7 +60,7 @@ banexコマンドは、banパーミッションを持つユーザから見える
 
 　<reason_text>
 　　<judge>が"Deny"の時に表示するKick理由です。
-　　空の場合は "You are banned."と表示します。
+　　空の場合はここには表示されず、Kick理由として "You are banned." と表示します。
 　　<judge>が"Allow"の時には使用されないので、メモを書けます。
 
 「表示例」の場合、以下のような動作になります。
@@ -132,6 +124,7 @@ SqlTableの宣言はこんな感じです。
 2014/05/29
 	Terraria 1.2.4.x / TShockAPI 1.16 対応
 	listコマンドにページャ機能を付加。
+	ページャをつけた関係上、リストの表示方法を１エントリ１行に変更。
 	接続を許可/不許可した時に、どのエントリで判定されたかをログメッセージに出力するよう変更。
 	IPアドレス判定時のアドレス部、ネットマスク部の内部的な解釈方法を変更。
 	IPアドレス判定時にネットマスクとして4オクテットの形式(255.255.0.0等)を使用できるよう変更。

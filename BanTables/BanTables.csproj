@@ -95,27 +95,20 @@
   <ItemGroup>
     <Compile Include="..\mackereler\BanTables\BanEntry.cs">
       <Link>BanEntry.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="..\mackereler\BanTables\BanPredicates.cs">
       <Link>BanPredicates.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="..\mackereler\BanTables\Commands.cs">
       <Link>Commands.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="..\mackereler\BanTables\DBTable.cs">
       <Link>DBTable.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="..\mackereler\BanTables\DnsResolver.cs">
       <Link>DnsResolver.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Plugin.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -37,7 +37,7 @@ namespace MackerelPluginSet.BanTables {
 					if (b.AllowJudge) {
 						// allowed
 						TS.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is Allowed by entry #{3}.",
-							player.Name, player.IP, hostname, ban.Priority));
+							player.Name, player.IP, hostname, b.Priority));
 						return;
 					}
 					else {
