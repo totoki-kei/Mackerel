@@ -14,6 +14,16 @@ namespace MackerelPluginSet.BanTables {
 
 		public DBTable(System.Data.IDbConnection database) {
 			this.database = database;
+			try {
+				EnsureExistTable(database);
+			}
+			catch (DllNotFoundException) {
+				System.Console.WriteLine("Possible problem with your database - is Sqlite3.dll present?");
+				throw new Exception("Could not find a database library (probably Sqlite3.dll)");
+			}
+		}
+
+		private void EnsureExistTable(System.Data.IDbConnection database) {
 			table = new SqlTable(TableName,
 				new SqlColumn("Priority", MySqlDbType.Int32) { NotNull = true, Unique = true, Primary = true },
 				new SqlColumn("Judge", MySqlDbType.String, 8) { NotNull = true, DefaultValue = "Deny" },
@@ -25,13 +35,7 @@ namespace MackerelPluginSet.BanTables {
 											  database.GetSqlType() == SqlType.Sqlite
 												? (IQueryBuilder)new SqliteQueryCreator()
 												: new MysqlQueryCreator());
-			try {
-				creator.EnsureExists(table);
-			}
-			catch (DllNotFoundException) {
-				System.Console.WriteLine("Possible problem with your database - is Sqlite3.dll present?");
-				throw new Exception("Could not find a database library (probably Sqlite3.dll)");
-			}
+			creator.EnsureExists(table);
 		}
 
 		public IEnumerable<BanEntry> GetBanTables() {

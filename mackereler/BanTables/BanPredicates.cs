@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace MackerelPluginSet.BanTables {
@@ -48,6 +49,13 @@ namespace MackerelPluginSet.BanTables {
 			coreTable.Add("hostname", JudgeHostname_Core);
 		}
 
+		private static uint IPAddressToUint(IPAddress nwip) {
+			uint mask;
+			byte[] bs = nwip.GetAddressBytes();
+			mask = ((uint)bs[0] << 24) | ((uint)bs[1] << 16) | ((uint)bs[2] << 8) | (uint)bs[3];
+			return mask;
+		}
+
 		static bool JudgeName(TShockAPI.TSPlayer p, string arg) {
 			string s = p.Name;
 			return JudgeName_Core(s, arg);
@@ -67,23 +75,28 @@ namespace MackerelPluginSet.BanTables {
 			// normalize IP address
 			try {
 				string[] ipAndNw = arg.Split('/');
-				byte[] fb = ipAndNw[0].Split('.').Select(str => byte.Parse(str)).ToArray();
-				byte[] pb = s.Split('.').Select(str => byte.Parse(str)).ToArray();
+				IPAddress ip = IPAddress.Parse(ipAndNw[0]);
+				IPAddress playerIp = IPAddress.Parse(s);
 
-				uint fi = 0;
-				uint pi = 0;
-				for (int i = 0; i < 4; i++) {
-					fi = (uint)(fi << 8) + (i < fb.Length ? fb[i] : 0U);
-					pi = (uint)(pi << 8) + (i < pb.Length ? pb[i] : 0U);
-				}
-
+				IPAddress nwip;
 				int nw;
-				if (ipAndNw.Length < 2 || !int.TryParse(ipAndNw[1], out nw)) {
-					nw = 32;
+				uint mask;
+				if (ipAndNw.Length < 2 ){
+					mask = 0xFFFFFFFFU;
+				}
+				else if (IPAddress.TryParse(ipAndNw[1], out nwip)) {
+					mask = IPAddressToUint(nwip);
+				}
+				else if (int.TryParse(ipAndNw[1], out nw)) {
+					mask = (uint)((0xFFFFFFFF00000000UL >> nw) & 0xFFFFFFFFU);
+				}
+				else {
+					mask = 0xFFFFFFFFU;
 				}
 
-				uint mask = (uint)((1UL << nw) - 1U) << (32 - nw);
-
+				uint fi = IPAddressToUint(ip);
+				uint pi = IPAddressToUint(playerIp);
+				
 				return (fi & mask) == (pi & mask);
 			}
 			catch (FormatException) {

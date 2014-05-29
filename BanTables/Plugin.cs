@@ -29,12 +29,15 @@ namespace MackerelPluginSet.BanTables {
 			BanEntry ban = null;
 
 			// 結果に関係なく、とりあえずホスト名をログに表示する。
-			TS.Log.Info(string.Format(@"IP {0}'s hostname is ""{1}""", player.IP, DnsResolver.GetHostByIP(player.IP) ?? "(null)"));
+			string hostname = DnsResolver.GetHostByIP(player.IP) ?? "(null)";
+			TS.Log.Info(string.Format(@"IP {0}'s hostname is ""{1}""", player.IP, hostname));
 
 			foreach (var b in banList) {
 				if (b.IsMatches(player)) {
 					if (b.AllowJudge) {
 						// allowed
+						TS.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is Allowed by entry #{3}.",
+							player.Name, player.IP, hostname, ban.Priority));
 						return;
 					}
 					else {
@@ -53,6 +56,8 @@ namespace MackerelPluginSet.BanTables {
 				else {
 					TS.TShock.Utils.Kick(player, ban.Reason, true);
 				}
+				TS.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is kicked by entry #{3}.", 
+					player.Name, player.IP, hostname, ban.Priority));
 			}
 		}
 

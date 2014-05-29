@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-
 using TS = TShockAPI;
 
 namespace MackerelPluginSet.BanTables {
@@ -18,11 +18,11 @@ namespace MackerelPluginSet.BanTables {
 		}
 
 		static void OnCommand(TS.CommandArgs args) {
-			if (args.Player.RealPlayer) {
-				// サーバからしか使えないようにする
-				args.Player.SendWarningMessage("This command can use in server console.");
-				return;
-			}
+			//if (args.Player.RealPlayer) {
+			//	// サーバからしか使えないようにする
+			//	args.Player.SendWarningMessage("This command can use in server console.");
+			//	return;
+			//}
 
 			string mode = null;
 			if (args.Parameters.Count != 0) {
@@ -30,21 +30,43 @@ namespace MackerelPluginSet.BanTables {
 			}
 
 			if (mode == "list") {
+
 				// BanTableの全エントリを表示
 				var es = db.GetBanTables();
+				List<string> lines = new List<string>();
 				if (es == null) {
 					args.Player.SendErrorMessage("Failed to read entries. Please check log message.");
+					return;
 				}
 				else {
-					args.Player.SendInfoMessage("BanTable entries");
+					lines.Add("BanTable entries");
 					int count = 0;
 					foreach (var e in es) {
-						args.Player.SendInfoMessage(string.Format("{0} {1}({2}) => {3}", e.Priority, e.PredicateName, e.Parameter, e.AllowJudge ? "Allow" : "Deny"));
-						args.Player.SendInfoMessage(string.Format("     Reason : {0}", e.Reason));
+						lines.Add(string.Format("{0} {1}({2}) => {3}", e.Priority, e.PredicateName, e.Parameter, e.AllowJudge ? "Allow" : "Deny"));
+						lines.Add(string.Format("     Reason : {0}", e.Reason));
 						count++;
 					}
-					args.Player.SendInfoMessage("Total " + count.ToString() + " entries.");
+					lines.Add("Total " + count.ToString() + " entries.");
 				}
+
+				{
+					int pageNumber;
+					if (!TS.PaginationTools.TryParsePageNumber(args.Parameters, -1, args.Player, out pageNumber) || pageNumber == -1) {
+						// 引数が省略されている時は全件出す
+						foreach (string s in lines) {
+							args.Player.SendInfoMessage(s);
+						}
+					}
+					else {
+						TS.PaginationTools.SendPage(args.Player, pageNumber, lines,
+							new TS.PaginationTools.Settings {
+								HeaderFormat = "BanEx list ({0}/{1}):",
+								FooterFormat = "Type /banex list {0} for more page."
+							}
+						);
+					}
+				}
+
 				return;
 			}
 			else if(mode == "add") {
@@ -177,10 +199,10 @@ namespace MackerelPluginSet.BanTables {
 			
 			PrintHelp:
 			args.Player.SendInfoMessage("banex commands:");
-			args.Player.SendInfoMessage(" /banex list");
-			args.Player.SendInfoMessage(" /banex add <priority> <function> <parameter> [allow|deny [<Reason>]] ");
+			args.Player.SendInfoMessage(" /banex list [<page_no>]");
+			args.Player.SendInfoMessage(" /banex add <priority> <function> <parameter> [allow|deny [<reason text>]] ");
 			args.Player.SendInfoMessage(" /banex del <priority>");
-			args.Player.SendInfoMessage(" /banex move <priority> <new_priority>");
+			args.Player.SendInfoMessage(" /banex move <priority> <new priority>");
 			args.Player.SendInfoMessage(" /banex test <function> <value>");
 			args.Player.SendInfoMessage("available functions : " + string.Join(", ", BanPredicates.FunctionNames));
 		}
