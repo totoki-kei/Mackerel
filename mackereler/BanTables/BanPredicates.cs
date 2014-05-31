@@ -40,6 +40,7 @@ namespace MackerelPluginSet.BanTables {
 			funcTable.Add("name", JudgeName);
 			funcTable.Add("ip", JudgeIP);
 			funcTable.Add("hostname", JudgeHostname);
+			funcTable.Add("uuid", JudgeUUID);
 		}
 
 		private static void CreateCoreTable() {
@@ -47,6 +48,7 @@ namespace MackerelPluginSet.BanTables {
 			coreTable.Add("name", JudgeName_Core);
 			coreTable.Add("ip", JudgeIP_Core);
 			coreTable.Add("hostname", JudgeHostname_Core);
+			coreTable.Add("uuid", JudgeUUID_Core);
 		}
 
 		private static uint IPAddressToUint(IPAddress nwip) {
@@ -112,6 +114,15 @@ namespace MackerelPluginSet.BanTables {
 		private static bool JudgeHostname_Core(string s, string arg) {
 			Regex r = new Regex(arg);
 			return r.IsMatch(s);
+		}
+
+		static bool JudgeUUID(TShockAPI.TSPlayer p, string arg) {
+			string s = p.UUID;
+			return JudgeUUID_Core(s, arg);
+		}
+
+		private static bool JudgeUUID_Core(string s, string arg) {
+			return s == arg;
 		}
 
 

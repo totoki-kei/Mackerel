@@ -68,6 +68,7 @@ namespace MackerelPluginSet.BanTables {
 					foreach (string s in lines) {
 						args.Player.SendInfoMessage(s);
 					}
+					args.Player.SendInfoMessage("HINT : Type /banex list 1 for use pager.");
 				}
 
 				return;
@@ -107,6 +108,12 @@ namespace MackerelPluginSet.BanTables {
 				// predが有効かどうか確認する
 				if(!BanPredicates.FunctionNames.Contains(pred)){
 					goto PrintHelp;
+				}
+
+				// UUIDの時は桁数をチェック
+				if (pred.ToLower() == "uuid" && param.Length != 128) {
+					args.Player.SendErrorMessage("UUID length error (must be 128)");
+					return;
 				}
 
 				var e = new BanEntry(priority, judge, pred, param, reason);
