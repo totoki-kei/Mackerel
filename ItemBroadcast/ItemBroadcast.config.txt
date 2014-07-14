@@ -1,4 +1,9 @@
 # This is sample "ItemBroadcast.config" file.
+# Please rename this file to "ItemBroadcast.config", and
+# put TShock working directory.
+#
+# Format
+#   <Item ID>=<Message>
 #
 # Message signature:
 #   %NAME% : Player name

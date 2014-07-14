@@ -26,6 +26,9 @@ namespace MackerelPluginSet.ItemBroadcast {
 				return;
 			}
 
+			if (TS.GetDataHandlers.PlayerUpdate == null) {
+				TS.GetDataHandlers.PlayerUpdate = new TS.HandlerList<TS.GetDataHandlers.PlayerUpdateEventArgs>();
+			}
 			TS.GetDataHandlers.PlayerUpdate.Register(
 				new TS.HandlerList<TS.GetDataHandlers.PlayerUpdateEventArgs>.HandlerItem() { 
 					Handler = new EventHandler<TS.GetDataHandlers.PlayerUpdateEventArgs>(OnPlayerUpdate)
