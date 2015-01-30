@@ -23,44 +23,55 @@ namespace MackerelPluginSet.KakaG {
 
 
 		public override void Initialize() {
-
-
-
 			if (conf.GodMode.ObsidianSkinEnabled) {
-				if (TS.GetDataHandlers.PlayerHP == null) {
-					TS.GetDataHandlers.PlayerHP = new TS.HandlerList<TS.GetDataHandlers.PlayerHPEventArgs>();
-				}
 				var handler = new TS.HandlerList<TS.GetDataHandlers.PlayerHPEventArgs>.HandlerItem();
-				handler.Handler = OnHp;
+				handler.Handler = OnHp_GodMode;
 				handler.Priority = 0;
 
-				TS.GetDataHandlers.PlayerHP.Register(handler);
+				TS.GetDataHandlers.PlayerHP += handler;
 			}
 
 			if (conf.GodMode.PvPfragileEnabled) {
-				if (TS.GetDataHandlers.PlayerDamage == null) {
-					TS.GetDataHandlers.PlayerDamage = new TS.HandlerList<TS.GetDataHandlers.PlayerDamageEventArgs>();
-				}
 				var handler = new TS.HandlerList<TS.GetDataHandlers.PlayerDamageEventArgs>.HandlerItem();
 				handler.Handler = OnDamage;
 				handler.Priority = 0;
 
-				TS.GetDataHandlers.PlayerDamage.Register(handler);
+				TS.GetDataHandlers.PlayerDamage += handler;
 			}
 			if (conf.HPRequirement.RequiredHP != 0) {
-				ServerApi.Hooks.ServerJoin.Register(this, ServerHooks_Join);
+				TS.GetDataHandlers.PlayerHP += new EventHandler<TS.GetDataHandlers.PlayerHPEventArgs>(OnHP_RequiredHP);
+			}
+			if (conf.PotionSickness.Enabled) {
+				var handler = new TS.HandlerList<TS.GetDataHandlers.PlayerUpdateEventArgs>.HandlerItem();
+				handler.Handler = OnPlayerUpdate;
+				handler.Priority = 0;
+
+				TS.GetDataHandlers.PlayerUpdate += handler;
 			}
 
 			TS.Log.ConsoleInfo("Mackerel KakaG Plugin is loaded.");
 
 		}
 
-		private void ServerHooks_Join(JoinEventArgs args) {
-			var player = TS.TShock.Players[args.Who];
-			if (player.FirstMaxHP < conf.HPRequirement.RequiredHP) {
-				string msg = string.Format(conf.HPRequirement.KickMessageFormat, conf.HPRequirement.RequiredHP, player.FirstMaxHP);
+		private void OnHP_RequiredHP(object sender, TS.GetDataHandlers.PlayerHPEventArgs e) {
+			var player = TS.TShock.Players[e.PlayerId]; 
+			if (e.Max < conf.HPRequirement.RequiredHP) {
+				string msg = string.Format(conf.HPRequirement.KickMessageFormat, conf.HPRequirement.RequiredHP, e.Max);
 				TS.TShock.Utils.Kick(player, msg, silent: true);
 			}
+		}
+
+		private void OnPlayerUpdate(object sender, TS.GetDataHandlers.PlayerUpdateEventArgs e) {
+			var player = TS.TShock.Players[e.PlayerId];
+
+			int buf21 = player.TPlayer.HasBuff(21);
+			if (buf21 >= 0) player.TPlayer.DelBuff(buf21);
+
+			int buf57 = player.TPlayer.HasBuff(57);
+			if (buf57 >= 0) player.TPlayer.DelBuff(buf57);
+
+			NetMessage.SendData((int)PacketTypes.PlayerBuff, -1, player.Index, "", player.Index);
+
 		}
 
 		private void OnDamage(object sender, TS.GetDataHandlers.PlayerDamageEventArgs e) {
@@ -79,7 +90,7 @@ namespace MackerelPluginSet.KakaG {
 			}
 		}
 
-		private void OnHp(object sender, TS.GetDataHandlers.PlayerHPEventArgs e) {
+		private void OnHp_GodMode(object sender, TS.GetDataHandlers.PlayerHPEventArgs e) {
 			// このハンドラが呼ばれるのは、GodModeの回復判定などが行われるときと同じタイミング。
 			TS.TSPlayer player = TS.TShock.Players[e.PlayerId];
 
@@ -90,7 +101,7 @@ namespace MackerelPluginSet.KakaG {
 		}
 
 		public override Version Version {
-			get { return new Version("1.2"); }
+			get { return new Version("1.2.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel KakaG Plugin"; }

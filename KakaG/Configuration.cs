@@ -20,9 +20,15 @@ namespace MackerelPluginSet.KakaG {
 			public int RequiredHP { get; set; }
 			public string KickMessageFormat { get; set; }
 		}
+		[Serializable]
+		public class PotionSicknessConfiguration {
+			public bool Enabled { get; set; }
+			public int SicknessTime { get; set; }
+		}
 
 		public GodModeConfiguration GodMode;
 		public HPRequirementConfiguration HPRequirement;
+		public PotionSicknessConfiguration PotionSickness;
 
 
 		[XmlIgnore]
@@ -32,6 +38,7 @@ namespace MackerelPluginSet.KakaG {
 			// デフォルト値の設定
 			GodMode = new GodModeConfiguration() { ObsidianSkinEnabled = true, PvPfragileEnabled = true };
 			HPRequirement = new HPRequirementConfiguration() { RequiredHP = 400, KickMessageFormat = "Need HP {0} over. your HP is {1}." };
+			PotionSickness = new PotionSicknessConfiguration() { Enabled = false, SicknessTime = 60 };
 		}
 
 		public static Configuration Load() {
