@@ -6,8 +6,8 @@ using System.Text;
 
 using Terraria;
 
-namespace MackerelPluginSet.BvB.Fields {
-	public class PatternField : MackerelPluginSet.BvB.Fields.IField {
+namespace MackerelPluginSet.RegionImport.Fields {
+	public class PatternField : MackerelPluginSet.RegionImport.Fields.IField {
 		#region static
 		private static Dictionary<string, PatternField> cache;
 

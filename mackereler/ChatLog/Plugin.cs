@@ -9,7 +9,7 @@ using Terraria;
 using TerrariaApi.Server;
 
 namespace MackerelPluginSet.ChatLog {
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 17)]
 	public class Plugin : TerrariaPlugin {
 		Settings setting;
 		LogFile log;

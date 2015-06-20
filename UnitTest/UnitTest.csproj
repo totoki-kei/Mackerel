@@ -85,9 +85,9 @@
       <Project>{f2a3952a-49ad-41ae-a7c4-bbb15f0a10c3}</Project>
       <Name>BanTables</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BvB\BvB.csproj">
+    <ProjectReference Include="..\BvB\RegionImport.csproj">
       <Project>{a895e371-3d20-4cb6-9d73-1b5ed0097eef}</Project>
-      <Name>BvB</Name>
+      <Name>RegionImport</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

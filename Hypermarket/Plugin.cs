@@ -35,8 +35,9 @@ namespace MackerelPluginSet.Hypermarket {
 		}
 
 		private void onNpcSpawn(NpcSpawnEventArgs args) {
-			Debug.WriteLine("{0} : {1}", args.Npc.type, args.Npc.name);
-			if (args.Npc.type == 368 /* Traveling Merchant */) {
+			var Npc = Main.npc[args.NpcId];
+			Debug.WriteLine("{0} : {1}", Npc.type, Npc.name);
+			if (Npc.type == 368 /* Traveling Merchant */) {
 				Shuffle();
 
 				NetMessage.SendTravelShop();

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MackerelPluginSet.BvB.Fields {
+namespace MackerelPluginSet.RegionImport.Fields {
 	interface IField {
 		void Apply(int startX, int startY);
 		int Height { get; }

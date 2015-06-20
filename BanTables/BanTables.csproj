@@ -7,7 +7,7 @@
     <ProjectGuid>{F2A3952A-49AD-41AE-A7C4-BBB15F0A10C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BanTables</RootNamespace>
+    <RootNamespace>MackerelPluginSet.BanTables</RootNamespace>
     <AssemblyName>BanTables</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -73,8 +73,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
-      <HintPath>..\..\..\..\..\..\..\TShock\serverplugins\MySql.Data.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\TShock\ServerPlugins\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -84,12 +83,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="TerrariaServer">
-      <HintPath>..\..\..\..\..\..\..\TShock\TerrariaServer.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\TShock\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TShockAPI">
-      <HintPath>..\..\..\..\..\..\..\TShock\serverplugins\TShockAPI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\TShock\ServerPlugins\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +105,7 @@
     <Compile Include="..\mackereler\BanTables\DnsResolver.cs">
       <Link>DnsResolver.cs</Link>
     </Compile>
+    <Compile Include="IPredicate.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -118,7 +116,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "D:\TShock\serverplugins"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "E:\TShock\serverplugins"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

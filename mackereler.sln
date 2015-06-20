@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MackerelPluginSet", "mackereler\MackerelPluginSet.csproj", "{FFDDA81E-6F28-4CAA-AA50-6B402B45AA5F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanTables", "BanTables\BanTables.csproj", "{F2A3952A-49AD-41AE-A7C4-BBB15F0A10C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerListJPMod", "ServerListJPMod\ServerListJPMod.csproj", "{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemJack", "BlockWorld\ItemJack.csproj", "{A0F38B2F-B306-4BC1-9D63-5E7006036475}"
 EndProject
@@ -17,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KakaG", "KakaG\KakaG.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafetyRocket", "SafetyRocket\SafetyRocket.csproj", "{D6B157A3-682F-408F-9F48-4B8FAE10C137}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BvB", "BvB\BvB.csproj", "{A895E371-3D20-4CB6-9D73-1B5ED0097EEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionImport", "BvB\RegionImport.csproj", "{A895E371-3D20-4CB6-9D73-1B5ED0097EEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TShockAPI", "..\TShock\TShockAPI\TShockAPI.csproj", "{49606449-072B-4CF5-8088-AA49DA586694}"
 EndProject
@@ -60,16 +58,6 @@ Global
 		{F2A3952A-49AD-41AE-A7C4-BBB15F0A10C3}.Release|x86.ActiveCfg = Release|x86
 		{F2A3952A-49AD-41AE-A7C4-BBB15F0A10C3}.Release|x86.Build.0 = Release|x86
 		{F2A3952A-49AD-41AE-A7C4-BBB15F0A10C3}.Release|x86.Deploy.0 = Release|x86
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Debug|x86.ActiveCfg = Debug|x86
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Release|Mixed Platforms.Build.0 = Release|x86
-		{CB4BB53D-F47A-4315-93BB-24B3CA0B47AF}.Release|x86.ActiveCfg = Release|x86
 		{A0F38B2F-B306-4BC1-9D63-5E7006036475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0F38B2F-B306-4BC1-9D63-5E7006036475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0F38B2F-B306-4BC1-9D63-5E7006036475}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -131,14 +119,14 @@ Global
 		{A895E371-3D20-4CB6-9D73-1B5ED0097EEF}.Release|x86.Build.0 = Release|x86
 		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|x86.ActiveCfg = Debug|x86
+		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{49606449-072B-4CF5-8088-AA49DA586694}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{49606449-072B-4CF5-8088-AA49DA586694}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49606449-072B-4CF5-8088-AA49DA586694}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49606449-072B-4CF5-8088-AA49DA586694}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{49606449-072B-4CF5-8088-AA49DA586694}.Release|Mixed Platforms.Build.0 = Release|x86
-		{49606449-072B-4CF5-8088-AA49DA586694}.Release|x86.ActiveCfg = Release|x86
+		{49606449-072B-4CF5-8088-AA49DA586694}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{49606449-072B-4CF5-8088-AA49DA586694}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{49606449-072B-4CF5-8088-AA49DA586694}.Release|x86.ActiveCfg = Release|Any CPU
 		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Debug|Mixed Platforms.ActiveCfg = Debug|x86

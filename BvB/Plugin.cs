@@ -3,7 +3,7 @@ using Terraria;
 using TerrariaApi.Server;
 using TS = TShockAPI;
 
-namespace MackerelPluginSet.BvB {
+namespace MackerelPluginSet.RegionImport {
 //*
 	[ApiVersion(1, 16)]
 	public class Plugin : TerrariaPlugin {
@@ -13,12 +13,11 @@ namespace MackerelPluginSet.BvB {
 		}
 
 
-		Test.Commands testcmd;
 		public override void Initialize() {
 
-			TS.Log.ConsoleInfo("Mackerel BvB Plugin is loaded.");
+			TS.Log.ConsoleInfo("Mackerel RegionImport Plugin is loaded.");
 
-			testcmd = new Test.Commands();
+			Commands.InitializeCommands();
 		}
 
 		public override Version Version {

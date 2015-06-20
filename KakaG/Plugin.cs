@@ -10,7 +10,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet.KakaG {
 
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 17)]
 	public class Plugin : TerrariaPlugin {
 		Configuration conf;
 
@@ -40,6 +40,7 @@ namespace MackerelPluginSet.KakaG {
 			}
 			if (conf.HPRequirement.RequiredHP != 0) {
 				TS.GetDataHandlers.PlayerHP += new EventHandler<TS.GetDataHandlers.PlayerHPEventArgs>(OnHP_RequiredHP);
+				ServerApi.Hooks.ServerJoin.Register(this, ServerHooks_Join);
 			}
 			if (conf.PotionSickness.Enabled) {
 				var handler = new TS.HandlerList<TS.GetDataHandlers.PlayerUpdateEventArgs>.HandlerItem();
@@ -53,12 +54,22 @@ namespace MackerelPluginSet.KakaG {
 
 		}
 
-		private void OnHP_RequiredHP(object sender, TS.GetDataHandlers.PlayerHPEventArgs e) {
-			var player = TS.TShock.Players[e.PlayerId]; 
-			if (e.Max < conf.HPRequirement.RequiredHP) {
-				string msg = string.Format(conf.HPRequirement.KickMessageFormat, conf.HPRequirement.RequiredHP, e.Max);
+		int[] hpcache;
+
+		private void ServerHooks_Join(JoinEventArgs args) {
+			if (hpcache == null) return;
+
+			var player = TS.TShock.Players[args.Who];
+			if (hpcache[args.Who] < conf.HPRequirement.RequiredHP) {
+				string msg = string.Format(conf.HPRequirement.KickMessageFormat, conf.HPRequirement.RequiredHP, hpcache[args.Who]);
 				TS.TShock.Utils.Kick(player, msg, silent: true);
 			}
+		}
+
+		private void OnHP_RequiredHP(object sender, TS.GetDataHandlers.PlayerHPEventArgs e) {
+			if (hpcache == null) hpcache = new int[TS.TShock.Players.Length];
+
+			hpcache[e.PlayerId] = e.Max;
 		}
 
 		private void OnPlayerUpdate(object sender, TS.GetDataHandlers.PlayerUpdateEventArgs e) {

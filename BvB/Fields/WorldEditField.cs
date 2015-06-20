@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Terraria;
+using WorldEdit;
 
-namespace MackerelPluginSet.BvB.Fields {
+namespace MackerelPluginSet.RegionImport.Fields {
 	/// <summary>
 	/// WorldEditプラグイン (by MarioE) のクリップボードデータを使用するフィールド
 	/// </summary>
@@ -14,6 +16,11 @@ namespace MackerelPluginSet.BvB.Fields {
 		Tile[,] tile;
 
 		private static class Helper {
+			public static Tile[,] LoadWorldData(string path) {
+				var tile = WorldEdit.Tools.LoadWorldData(path);
+				return tile;
+			}
+#if false
 			public static Tile[,] LoadWorldData(string path, out int width, out int height) {
 				Tile[,] tile;
 				// GZipStream is already buffered, but it's much faster to have a 1 MB buffer.
@@ -67,12 +74,16 @@ namespace MackerelPluginSet.BvB.Fields {
 				}
 				return tile;
 			}
+#endif
 		}
 
 		public WorldEditField() { }
 
 		public void Load(string filename) {
-			this.tile = Helper.LoadWorldData(filename, out width, out height);
+			//this.tile = Helper.LoadWorldData(filename, out width, out height);
+			this.tile = Helper.LoadWorldData(filename);
+			this.width = tile.GetLength(0);
+			this.height = tile.GetLength(1);
 		}
 
 		int width;

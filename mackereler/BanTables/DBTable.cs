@@ -35,7 +35,7 @@ namespace MackerelPluginSet.BanTables {
 											  database.GetSqlType() == SqlType.Sqlite
 												? (IQueryBuilder)new SqliteQueryCreator()
 												: new MysqlQueryCreator());
-			creator.EnsureExists(table);
+			creator.EnsureTableStructure(table);
 		}
 
 		public IEnumerable<BanEntry> GetBanTables() {

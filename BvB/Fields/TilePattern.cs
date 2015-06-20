@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace MackerelPluginSet.BvB.Fields {
+namespace MackerelPluginSet.RegionImport.Fields {
 
 	public enum PaintColors : byte {
 		None,

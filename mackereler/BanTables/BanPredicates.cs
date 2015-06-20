@@ -86,7 +86,7 @@ namespace MackerelPluginSet.BanTables {
 				if (ipAndNw.Length < 2 ){
 					mask = 0xFFFFFFFFU;
 				}
-				else if (IPAddress.TryParse(ipAndNw[1], out nwip)) {
+				else if (ipAndNw[1].Contains('.') && IPAddress.TryParse(ipAndNw[1], out nwip)) {
 					mask = IPAddressToUint(nwip);
 				}
 				else if (int.TryParse(ipAndNw[1], out nw)) {
@@ -134,5 +134,6 @@ namespace MackerelPluginSet.BanTables {
 				return funcTable.Keys;
 			}
 		}
+
 	}
 }

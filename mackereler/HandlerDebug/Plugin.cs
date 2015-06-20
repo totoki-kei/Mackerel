@@ -11,64 +11,128 @@ using System.Linq;
 
 namespace MackerelPluginSet.HandlerDebug {
 #if DEBUG
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 17)]
 	public class Plugin : TerrariaPlugin {
+
+		bool enabled = false;
 
 		public Plugin(Main game)
 			: base(game) {	
 		}
 
 		public override void Initialize() {
+			
+			SetHandler(ref TS.GetDataHandlers.ChestItemChange);
+			SetHandler(ref TS.GetDataHandlers.ChestOpen);
+			SetHandler(ref TS.GetDataHandlers.ItemDrop);
+			SetHandler(ref TS.GetDataHandlers.KillMe);
+			SetHandler(ref TS.GetDataHandlers.LiquidSet);
+			SetHandler(ref TS.GetDataHandlers.NewProjectile);
+			SetHandler(ref TS.GetDataHandlers.NPCHome);
+			SetHandler(ref TS.GetDataHandlers.NPCSpecial);
+			SetHandler(ref TS.GetDataHandlers.NPCStrike);
+			SetHandler(ref TS.GetDataHandlers.PlayerAnimation);
+			SetHandler(ref TS.GetDataHandlers.PlayerBuff);
+			SetHandler(ref TS.GetDataHandlers.PlayerBuffUpdate);
+			SetHandler(ref TS.GetDataHandlers.PlayerDamage);
+			SetHandler(ref TS.GetDataHandlers.PlayerHP);
+			SetHandler(ref TS.GetDataHandlers.PlayerInfo);
+			SetHandler(ref TS.GetDataHandlers.PlayerMana);
+			SetHandler(ref TS.GetDataHandlers.PlayerSlot);
+			SetHandler(ref TS.GetDataHandlers.PlayerSpawn);
+			SetHandler(ref TS.GetDataHandlers.PlayerTeam);
+			SetHandler(ref TS.GetDataHandlers.PlayerUpdate);
+			SetHandler(ref TS.GetDataHandlers.SendTileSquare);
+			SetHandler(ref TS.GetDataHandlers.Sign);
+			SetHandler(ref TS.GetDataHandlers.TileEdit);
+			SetHandler(ref TS.GetDataHandlers.TileKill);
+			SetHandler(ref TS.GetDataHandlers.TogglePvp);
 
-			SetHandler(ref TS.GetDataHandlers.ChestItemChange, OnChestItemChange);
-			SetHandler(ref TS.GetDataHandlers.ChestOpen, OnChestOpen);
-			SetHandler(ref TS.GetDataHandlers.ItemDrop, OnItemDrop);
-			SetHandler(ref TS.GetDataHandlers.KillMe, OnKillMe);
-			SetHandler(ref TS.GetDataHandlers.LiquidSet, OnLiquidSet);
-			SetHandler(ref TS.GetDataHandlers.NewProjectile, OnNewProjectile);
-			SetHandler(ref TS.GetDataHandlers.NPCHome, OnNPCHome);
-			SetHandler(ref TS.GetDataHandlers.NPCSpecial, OnNPCSpecial);
-			SetHandler(ref TS.GetDataHandlers.NPCStrike, OnNPCStrike);
-			SetHandler(ref TS.GetDataHandlers.PlayerAnimation, OnPlayerAnimation);
-			SetHandler(ref TS.GetDataHandlers.PlayerBuff, OnPlayerBuff);
-			SetHandler(ref TS.GetDataHandlers.PlayerBuffUpdate, OnPlayerBuffUpdate);
-			SetHandler(ref TS.GetDataHandlers.PlayerDamage, OnPlayerDamage);
-			SetHandler(ref TS.GetDataHandlers.PlayerHP, OnPlayerHP);
-			SetHandler(ref TS.GetDataHandlers.PlayerInfo, OnPlayerInfo);
-			SetHandler(ref TS.GetDataHandlers.PlayerMana, OnPlayerMana);
-			SetHandler(ref TS.GetDataHandlers.PlayerSlot, OnPlayerSlot);
-			SetHandler(ref TS.GetDataHandlers.PlayerSpawn, OnPlayerSpawn);
-			SetHandler(ref TS.GetDataHandlers.PlayerTeam, OnPlayerTeam);
-			SetHandler(ref TS.GetDataHandlers.PlayerUpdate, OnPlayerUpdate);
-			SetHandler(ref TS.GetDataHandlers.SendTileSquare, OnSendTileSquare);
-			SetHandler(ref TS.GetDataHandlers.Sign, OnSign);
-			SetHandler(ref TS.GetDataHandlers.TileEdit, OnTileEdit);
-			SetHandler(ref TS.GetDataHandlers.TileKill, OnTileKill);
-			SetHandler(ref TS.GetDataHandlers.TogglePvp, OnTogglePvp);
+			// リフレクションを使ってこれを簡略化したいが
+			// 思っていた以上に複雑になりそうなので一旦保留する
 
-			TS.Hooks.GeneralHooks.ReloadEvent += GeneralHooks_ReloadEvent;
-			TS.Hooks.PlayerHooks.PlayerCommand += PlayerHooks_PlayerCommand;
-			TS.Hooks.PlayerHooks.PlayerPostLogin += PlayerHooks_PlayerPostLogin;
-			TS.Hooks.PlayerHooks.PlayerPreLogin += PlayerHooks_PlayerPreLogin;
+			//var fields = typeof(TS.GetDataHandlers).GetFields(System.Reflection.BindingFlags.Static);
+			//foreach (var field in fields) {
+			//	if (field.FieldType == typeof(TS.HandlerList<>)) {					
+			//		// リフレクションで取ったフィールドをメソッドのref引数として渡すには・・・？
+			//		SetHandler(...);
+			//	}
+			//}
+
+
+			TS.Hooks.GeneralHooks.ReloadEvent += e => Callback<TS.Hooks.ReloadEventArgs>(e, "GeneralHooks.ReloadEvent");
+			TS.Hooks.PlayerHooks.PlayerChat += e => Callback<TS.Hooks.PlayerChatEventArgs>(e, "PlayerHooks.PlayerChat");
+			TS.Hooks.PlayerHooks.PlayerCommand += e => Callback<TS.Hooks.PlayerCommandEventArgs>(e, "PlayerHooks.PlayerCommand");
+			TS.Hooks.PlayerHooks.PlayerPostLogin += e => Callback<TS.Hooks.PlayerPostLoginEventArgs>(e, "PlayerHooks.PlayerPostLogin");
+			TS.Hooks.PlayerHooks.PlayerPreLogin += e => Callback<TS.Hooks.PlayerPreLoginEventArgs>(e, "PlayerHooks.PlayerPreLogin");
+
+
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ClientChat);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ClientChatReceived);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameGetKeyState);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameHardmodeTileUpdate);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameInitialize);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GamePostInitialize);
+			//SetCallback(TerrariaApi.Server.ServerApi.Hooks.GamePostUpdate); // 間隔が短すぎるため一旦コメントアウトする
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameStatueSpawn);
+			//SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameUpdate); // 間隔が短すぎるため一旦コメントアウトする
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameWorldConnect);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameWorldDisconnect);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ItemNetDefaults);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ItemSetDefaultsInt);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ItemSetDefaultsString);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NetGetData);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NetGreetPlayer);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NetNameCollision);
+			//SetCallback(TerrariaApi.Server.ServerApi.Hooks.NetSendBytes); // NetSendDataでほぼ賄えるためコメントアウトする
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NetSendData);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcLootDrop);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcNetDefaults);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcSetDefaultsInt);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcSetDefaultsString);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcSpawn);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcStrike);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.NpcTriggerPressurePlate);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.PlayerUpdatePhysics);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ProjectileSetDefaults);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ProjectileTriggerPressurePlate);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ServerChat);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ServerCommand);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ServerConnect);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ServerJoin);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ServerLeave);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ServerSocketReset);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.WorldChristmasCheck);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.WorldHalloweenCheck);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.WorldMeteorDrop);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.WorldSave);
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.WorldStartHardMode);
+			// リフレクション以下略
+
+			TS.Commands.ChatCommands.Add(new TS.Command(new TS.CommandDelegate(cmd), "debugmsg"));
 		}
 
-		void PlayerHooks_PlayerPreLogin(TS.Hooks.PlayerPreLoginEventArgs e) {
-			PrintMessage(CreateMessage(e));
+		private void cmd(TS.CommandArgs args) {
+			if (args.Parameters.Count > 0) {
+				if (args.Parameters[0].Equals("on", StringComparison.CurrentCultureIgnoreCase)) {
+					enabled = true;
+				}
+				else if (args.Parameters[0].Equals("off", StringComparison.CurrentCultureIgnoreCase)) {
+					enabled = false;
+				}
+				else {
+					enabled = !enabled;
+				}
+			}
+			else {
+				enabled = !enabled;
+			}
+
+			args.Player.SendMessage("DebugMsg " + (enabled ? "Enabled" : "Disabled"), Color.Green);
 		}
 
-		void PlayerHooks_PlayerPostLogin(TS.Hooks.PlayerPostLoginEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		void PlayerHooks_PlayerCommand(TS.Hooks.PlayerCommandEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		void GeneralHooks_ReloadEvent(TS.Hooks.ReloadEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private static void PrintMessage(string str) {
+		private void PrintMessage(string str) {
+			if (!enabled) return;
 			System.Diagnostics.StackFrame sf = new StackFrame(1);
 			string time = DateTime.Now.ToString("yyyy/MM/dd-HH:mm:ss.fff");
 			Debug.WriteLine(string.Format("{0} {1} : {2}", time, sf.GetMethod().Name , str));
@@ -77,125 +141,31 @@ namespace MackerelPluginSet.HandlerDebug {
 		private string CreateMessage<T>(T e){
 			Type t = typeof(T);
 			var ps = t.GetProperties();
-			StringBuilder sb = new StringBuilder();
 
 			var pstrs = ps
 				.Where(p => p.Name != "Handled")
-				//.Select(p => new { p.Name, Type = p.GetType(), Value = p.GetValue(e, null)})
-				//;
 				.Select(p => string.Format("{0}={1}", p.Name, p.GetValue(e, null)));
 			return string.Join(", ", pstrs);
 		}
 
-		private void OnTogglePvp(object sender, TS.GetDataHandlers.TogglePvpEventArgs e) {
-			PrintMessage(CreateMessage(e));
+		private void Callback<T>(T e, string text) {
+			PrintMessage("[" + text + "] " + CreateMessage(e));
+		}
+		private void SetCallback<T>(HandlerCollection<T> handlerCollection) where T: EventArgs {
+			handlerCollection.Register(this, n => Callback<T>(n, handlerCollection.hookName));
 		}
 
-		private void OnTileKill(object sender, TS.GetDataHandlers.TileKillEventArgs e) {
-			PrintMessage(CreateMessage(e));
+		private void Handler<T>(object sender, T e)  {
+			PrintMessage("[" + typeof(T).Name + "] " + CreateMessage(e));
 		}
-
-		private void OnTileEdit(object sender, TS.GetDataHandlers.TileEditEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnSign(object sender, TS.GetDataHandlers.SignEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnSendTileSquare(object sender, TS.GetDataHandlers.SendTileSquareEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerUpdate(object sender, TS.GetDataHandlers.PlayerUpdateEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerSpawn(object sender, TS.GetDataHandlers.SpawnEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerSlot(object sender, TS.GetDataHandlers.PlayerSlotEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerMana(object sender, TS.GetDataHandlers.PlayerManaEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerInfo(object sender, TS.GetDataHandlers.PlayerInfoEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerHP(object sender, TS.GetDataHandlers.PlayerHPEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerDamage(object sender, TS.GetDataHandlers.PlayerDamageEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerBuffUpdate(object sender, TS.GetDataHandlers.PlayerBuffUpdateEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerBuff(object sender, TS.GetDataHandlers.PlayerBuffEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerAnimation(object sender, TS.GetDataHandlers.PlayerAnimationEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnNPCStrike(object sender, TS.GetDataHandlers.NPCStrikeEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnNPCSpecial(object sender, TS.GetDataHandlers.NPCSpecialEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnNPCHome(object sender, TS.GetDataHandlers.NPCHomeChangeEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnNewProjectile(object sender, TS.GetDataHandlers.NewProjectileEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnLiquidSet(object sender, TS.GetDataHandlers.LiquidSetEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnKillMe(object sender, TS.GetDataHandlers.KillMeEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnItemDrop(object sender, TS.GetDataHandlers.ItemDropEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnChestOpen(object sender, TS.GetDataHandlers.ChestOpenEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnChestItemChange(object sender, TS.GetDataHandlers.ChestItemEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void OnPlayerTeam(object sender, TS.GetDataHandlers.PlayerTeamEventArgs e) {
-			PrintMessage(CreateMessage(e));
-		}
-
-		private void SetHandler<T>(ref TS.HandlerList<T> handlerList, EventHandler<T> handler) where T : EventArgs {
-			if (handlerList == null)
-				handlerList = new TS.HandlerList<T>();
+		private void SetHandler<T>(ref TS.HandlerList<T> handlerList) where T : EventArgs {
 			var h = new TS.HandlerList<T>.HandlerItem() {
-				Handler = handler,
+				Handler = Handler<T>,
 				Priority = TS.HandlerPriority.Highest,
 			};
-			handlerList.Register(h);
+			handlerList += h;
 		}
+
 
 		public override Version Version {
 			get { return new Version("1.0"); }

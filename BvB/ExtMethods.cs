@@ -3,7 +3,7 @@ using System.Collections.Generic;
 //using System.Linq;
 using System.Text;
 
-namespace MackerelPluginSet.BvB {
+namespace MackerelPluginSet.RegionImport {
 	static class ExtMethods {
 		public delegate bool TryParseMethod<T>(string s, out T t);
 		public static T? To<T>(this string s, TryParseMethod<T> m) where T:struct {

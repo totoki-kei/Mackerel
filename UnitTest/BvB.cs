@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using MackerelPluginSet.BvB.Fields;
+using MackerelPluginSet.RegionImport.Fields;
 using System.Collections.Generic;
 using System.IO;
 
 namespace UnitTest {
 	[TestClass]
-	public class BvB {
+	public class RegionImport {
 		[TestMethod]
 		public void TestTilePattern() {
 
