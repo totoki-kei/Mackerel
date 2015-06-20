@@ -154,3 +154,7 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+ReleasedPackage/20140529/ItemBroadcast.zip
+*.zip
+ReleasedPackage/20140714/ItemBroadcast/ServerPlugins/ItemBroadcast.dll
+ReleasedPackage/20140714/ItemBroadcast/ItemBroadcast.config
