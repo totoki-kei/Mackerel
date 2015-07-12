@@ -6,7 +6,7 @@ using TerrariaApi.Server;
 
 namespace MackerelPluginSet.BanTables {
 #if true
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 19)]
 	public class Plugin : TerrariaPlugin {
 		public DBTable DBTable { get; private set; }
 		public Plugin(Main game)
@@ -15,7 +15,7 @@ namespace MackerelPluginSet.BanTables {
 
 		public override void Initialize() {
 
-			TS.Log.ConsoleInfo("Mackerel BanTable Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel BanTable Plugin is loaded.");
 			DBTable = new DBTable(TS.TShock.DB);
 
 			ServerApi.Hooks.ServerJoin.Register(this, ServerHooks_Join);
@@ -30,13 +30,13 @@ namespace MackerelPluginSet.BanTables {
 
 			// 結果に関係なく、とりあえずホスト名をログに表示する。
 			string hostname = DnsResolver.GetHostByIP(player.IP) ?? "(null)";
-			TS.Log.Info(string.Format(@"IP {0}'s hostname is ""{1}""", player.IP, hostname));
+			TS.TShock.Log.Info(string.Format(@"IP {0}'s hostname is ""{1}""", player.IP, hostname));
 
 			foreach (var b in banList) {
 				if (b.IsMatches(player)) {
 					if (b.AllowJudge) {
 						// allowed
-						TS.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is Allowed by entry #{3}.",
+						TS.TShock.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is Allowed by entry #{3}.",
 							player.Name, player.IP, hostname, b.Priority));
 						return;
 					}
@@ -51,12 +51,12 @@ namespace MackerelPluginSet.BanTables {
 			if (ban != null) {
 				args.Handled = true;
 				if (string.IsNullOrEmpty(ban.Reason)) {
-					TS.TShock.Utils.Kick(player, "You are banned.", true);
+					player.Disconnect("You are banned.");
 				}
 				else {
-					TS.TShock.Utils.Kick(player, ban.Reason, true);
+					player.Disconnect(ban.Reason);
 				}
-				TS.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is kicked by entry #{3}.", 
+				TS.TShock.Log.Info(string.Format("User {0} (IP = {1}, Hostname = {2}) is kicked by entry #{3}.", 
 					player.Name, player.IP, hostname, ban.Priority));
 			}
 		}
