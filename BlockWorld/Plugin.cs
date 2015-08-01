@@ -8,7 +8,7 @@ using TerrariaApi.Server;
 using TS = TShockAPI;
 
 namespace MackerelPluginSet.ItemJack {
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 		TS.Command originalItemCommand;
 		TS.Command originalGiveCommand;
@@ -40,7 +40,7 @@ namespace MackerelPluginSet.ItemJack {
 				}
 				);
 
-			TS.Log.ConsoleInfo("Mackerel ItemJack Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel ItemJack Plugin is loaded.");
 		}
 
 		private void OnGive(TS.CommandArgs args) {
@@ -207,11 +207,11 @@ namespace MackerelPluginSet.ItemJack {
 			// item権限がある場合は全アイテムOK
 			return player.Group.Name.Equals("superadmin", StringComparison.CurrentCultureIgnoreCase)
 				|| player.Group.permissions.Intersect(originalItemCommand.Permissions).Count() > 0
-				|| (i.rare == 0 && !(new []{71, 72, 73, 74}.Contains(i.netID))); // お金は除外
+				|| (i.rare == 0 && !(new []{71, 72, 73, 74}.Contains(i.netID))); // お金以外のレア度0
 		}
 		
 		public override Version Version {
-			get { return new Version("1.1.1"); }
+			get { return new Version("1.1.2"); }
 		}
 		public override string Name {
 			get { return "Mackerel ItemJack Plugin"; }

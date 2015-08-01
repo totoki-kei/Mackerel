@@ -5,7 +5,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet {
 /*
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)
@@ -14,7 +14,7 @@ namespace MackerelPluginSet {
 
 		public override void Initialize() {
 
-			TS.Log.ConsoleInfo("Mackerel xxx Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel xxx Plugin is loaded.");
 
 		}
 

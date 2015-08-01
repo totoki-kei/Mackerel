@@ -9,7 +9,7 @@ using Terraria;
 using TerrariaApi.Server;
 
 namespace MackerelPluginSet.ChatLog {
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 		Settings setting;
 		LogFile log;
@@ -34,10 +34,10 @@ namespace MackerelPluginSet.ChatLog {
 				ServerApi.Hooks.ServerJoin.Register(this, ServerHooks_Join);
 				ServerApi.Hooks.ServerLeave.Register(this, ServerHooks_Leave);
 
-				TS.Log.ConsoleInfo(Name + " is enabled.");
+				TS.TShock.Log.ConsoleInfo(Name + " is enabled.");
 			}
 			else {
-				TS.Log.ConsoleInfo(Name + " is disabled by setting.");
+				TS.TShock.Log.ConsoleInfo(Name + " is disabled by setting.");
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace MackerelPluginSet.ChatLog {
 
 
 		public override Version Version {
-			get { return new Version("1.2"); }
+			get { return new Version("1.2.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel ChatLog Plugin"; }

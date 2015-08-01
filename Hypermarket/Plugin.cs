@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MackerelPluginSet.Hypermarket {
 //*
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)
@@ -16,7 +16,7 @@ namespace MackerelPluginSet.Hypermarket {
 
 		public override void Initialize() {
 
-			TS.Log.ConsoleInfo("Mackerel Hypermarket Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel Hypermarket Plugin is loaded.");
 
 			TerrariaApi.Server.ServerApi.Hooks.NpcSpawn.Register(this, new HookHandler<NpcSpawnEventArgs>(onNpcSpawn));
 
@@ -58,7 +58,7 @@ namespace MackerelPluginSet.Hypermarket {
 		}
 
 		public override Version Version {
-			get { return new Version("1.0"); }
+			get { return new Version("1.0.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel Hypermarket Plugin"; }

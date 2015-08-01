@@ -25,7 +25,7 @@ namespace MackerelPluginSet.DamageTest {
 				TS.GetDataHandlers.PlayerDamage.Register(hnd);
 			}
 
-			TS.Log.ConsoleInfo("Mackerel KillScore Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel KillScore Plugin is loaded.");
 
 		}
 

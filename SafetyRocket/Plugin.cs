@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace MackerelPluginSet.SafetyRocket {
 
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)
@@ -20,7 +20,7 @@ namespace MackerelPluginSet.SafetyRocket {
 
 		public override void Initialize() {
 			SetHandler(ref TS.GetDataHandlers.NewProjectile, OnNewProjectile);
-			TS.Log.ConsoleInfo("Mackerel SafetyRocket Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel SafetyRocket Plugin is loaded.");
 		}
 
 
@@ -60,7 +60,7 @@ namespace MackerelPluginSet.SafetyRocket {
 		}
 
 		public override Version Version {
-			get { return new Version("1.0.2"); }
+			get { return new Version("1.0.3"); }
 		}
 		public override string Name {
 			get { return "Mackerel SafetyRocket Plugin"; }

@@ -12,11 +12,16 @@ namespace MackerelPluginSet.Itemize {
 	/// <summary>
 	/// ダメージを受けたときにアイテムを発生させる
 	/// </summary>
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 20)]
 	class Plugin : TerrariaPlugin {
+
+		// since ApiVersion(1, 19)
+		Random rand;
 
 		public Plugin(Main game)
 			: base(game) {
+
+				rand = new Random();
 		}
 
 		public override void Initialize() {
@@ -57,9 +62,9 @@ namespace MackerelPluginSet.Itemize {
 			}
 		}
 
-		static void OnDamage(object o, TS.GetDataHandlers.PlayerDamageEventArgs e) {
+		void OnDamage(object o, TS.GetDataHandlers.PlayerDamageEventArgs e) {
 			if(ItemEnabled) 
-				TS.TShock.Players[e.ID].GiveItem(TS.Utils.Instance.Random.Next(602) + 1, "???", 0, 0, 1, TS.Utils.Instance.Random.Next(82) + 1);
+				TS.TShock.Players[e.ID].GiveItem(rand.Next(602) + 1, "???", 0, 0, 1, rand.Next(82) + 1);
 		}
 
 		public static bool ItemEnabled {
@@ -68,7 +73,7 @@ namespace MackerelPluginSet.Itemize {
 		}
 
 		public override Version Version {
-			get { return new Version("1.1"); }
+			get { return new Version("1.1.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel Itemize Plugin"; }

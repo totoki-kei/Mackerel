@@ -5,7 +5,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet {
 //*
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)
@@ -14,7 +14,7 @@ namespace MackerelPluginSet {
 
 		public override void Initialize() {
 
-			TS.Log.ConsoleInfo("Mackerel Misc Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel Misc Plugin is loaded.");
 
 			TS.GetDataHandlers.NewProjectile.Register(handler); ;
 			TerrariaApi.Server.ServerApi.Hooks.ProjectileSetDefaults.Register(this, new HookHandler<SetDefaultsEventArgs<Projectile, int>>(hook));
@@ -37,7 +37,7 @@ namespace MackerelPluginSet {
 
 
 		public override Version Version {
-			get { return new Version("1.0"); }
+			get { return new Version("1.0.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel Plugin"; }

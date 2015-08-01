@@ -10,7 +10,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet.KakaG {
 
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 		Configuration conf;
 
@@ -50,7 +50,7 @@ namespace MackerelPluginSet.KakaG {
 				TS.GetDataHandlers.PlayerUpdate += handler;
 			}
 
-			TS.Log.ConsoleInfo("Mackerel KakaG Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel KakaG Plugin is loaded.");
 
 		}
 
@@ -112,7 +112,7 @@ namespace MackerelPluginSet.KakaG {
 		}
 
 		public override Version Version {
-			get { return new Version("1.2.1"); }
+			get { return new Version("1.2.2"); }
 		}
 		public override string Name {
 			get { return "Mackerel KakaG Plugin"; }

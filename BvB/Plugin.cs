@@ -5,7 +5,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet.RegionImport {
 //*
-	[ApiVersion(1, 16)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)
@@ -21,7 +21,7 @@ namespace MackerelPluginSet.RegionImport {
 		}
 
 		public override Version Version {
-			get { return new Version("1.0"); }
+			get { return new Version("1.0.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel Plugin"; }

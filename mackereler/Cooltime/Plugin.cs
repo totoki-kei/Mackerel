@@ -15,7 +15,7 @@ namespace MackerelPluginSet {
 
 		public override void Initialize() {
 
-			TS.Log.ConsoleInfo("Mackerel Cooltime Plugin is loaded.");
+			TS.TShock.Log.ConsoleInfo("Mackerel Cooltime Plugin is loaded.");
 
 		}
 

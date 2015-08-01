@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace MackerelPluginSet.HandlerDebug {
 #if DEBUG
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 20)]
 	public class Plugin : TerrariaPlugin {
 
 		bool enabled = false;
@@ -31,6 +31,8 @@ namespace MackerelPluginSet.HandlerDebug {
 			SetHandler(ref TS.GetDataHandlers.NPCHome);
 			SetHandler(ref TS.GetDataHandlers.NPCSpecial);
 			SetHandler(ref TS.GetDataHandlers.NPCStrike);
+			SetHandler(ref TS.GetDataHandlers.PaintTile);
+			SetHandler(ref TS.GetDataHandlers.PaintWall);
 			SetHandler(ref TS.GetDataHandlers.PlayerAnimation);
 			SetHandler(ref TS.GetDataHandlers.PlayerBuff);
 			SetHandler(ref TS.GetDataHandlers.PlayerBuffUpdate);
@@ -44,6 +46,7 @@ namespace MackerelPluginSet.HandlerDebug {
 			SetHandler(ref TS.GetDataHandlers.PlayerUpdate);
 			SetHandler(ref TS.GetDataHandlers.SendTileSquare);
 			SetHandler(ref TS.GetDataHandlers.Sign);
+			SetHandler(ref TS.GetDataHandlers.Teleport);
 			SetHandler(ref TS.GetDataHandlers.TileEdit);
 			SetHandler(ref TS.GetDataHandlers.TileKill);
 			SetHandler(ref TS.GetDataHandlers.TogglePvp);
@@ -63,13 +66,18 @@ namespace MackerelPluginSet.HandlerDebug {
 			TS.Hooks.GeneralHooks.ReloadEvent += e => Callback<TS.Hooks.ReloadEventArgs>(e, "GeneralHooks.ReloadEvent");
 			TS.Hooks.PlayerHooks.PlayerChat += e => Callback<TS.Hooks.PlayerChatEventArgs>(e, "PlayerHooks.PlayerChat");
 			TS.Hooks.PlayerHooks.PlayerCommand += e => Callback<TS.Hooks.PlayerCommandEventArgs>(e, "PlayerHooks.PlayerCommand");
+			TS.Hooks.PlayerHooks.PlayerLogout += e => Callback<TS.Hooks.PlayerLogoutEventArgs>(e, "PlayerHooks.PlayerLogout");
 			TS.Hooks.PlayerHooks.PlayerPostLogin += e => Callback<TS.Hooks.PlayerPostLoginEventArgs>(e, "PlayerHooks.PlayerPostLogin");
 			TS.Hooks.PlayerHooks.PlayerPreLogin += e => Callback<TS.Hooks.PlayerPreLoginEventArgs>(e, "PlayerHooks.PlayerPreLogin");
+			TS.Hooks.RegionHooks.RegionCreated += e => Callback<TS.Hooks.RegionHooks.RegionCreatedEventArgs>(e, "RegionHooks.RegionCreated");
+			TS.Hooks.RegionHooks.RegionDeleted += e => Callback<TS.Hooks.RegionHooks.RegionDeletedEventArgs>(e, "RegionHooks.RegionDeleted");
+			TS.Hooks.RegionHooks.RegionEntered += e => Callback<TS.Hooks.RegionHooks.RegionEnteredEventArgs>(e, "RegionHooks.RegionEntered");
+			TS.Hooks.RegionHooks.RegionLeft += e => Callback<TS.Hooks.RegionHooks.RegionLeftEventArgs>(e, "RegionHooks.RegionLeft");
 
-
-			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ClientChat);
-			SetCallback(TerrariaApi.Server.ServerApi.Hooks.ClientChatReceived);
-			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameGetKeyState);
+			//SetCallback(TerrariaApi.Server.ServerApi.Hooks.ClientChat); // updateで消滅
+			//SetCallback(TerrariaApi.Server.ServerApi.Hooks.ClientChatReceived); // updateで消滅
+			//SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameGetKeyState); // updateで消滅
+			SetCallback(TerrariaApi.Server.ServerApi.Hooks.DropBossBag);
 			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameHardmodeTileUpdate);
 			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GameInitialize);
 			SetCallback(TerrariaApi.Server.ServerApi.Hooks.GamePostInitialize);
@@ -168,7 +176,7 @@ namespace MackerelPluginSet.HandlerDebug {
 
 
 		public override Version Version {
-			get { return new Version("1.0"); }
+			get { return new Version("1.0.1"); }
 		}
 		public override string Name {
 			get { return "Mackerel HandlerDebug Plugin"; }
