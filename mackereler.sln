@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MackerelPluginSet", "mackereler\MackerelPluginSet.csproj", "{FFDDA81E-6F28-4CAA-AA50-6B402B45AA5F}"
 EndProject
@@ -138,6 +138,7 @@ Global
 		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Release|Mixed Platforms.Build.0 = Release|x86
 		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Release|x86.ActiveCfg = Release|x86
+		{8B81CE5A-2DC2-4C98-908F-390ABC85F030}.Release|x86.Build.0 = Release|x86
 		{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

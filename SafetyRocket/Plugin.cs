@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace MackerelPluginSet.SafetyRocket {
 
-	[ApiVersion(1, 20)]
+	[ApiVersion(1, 21)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)

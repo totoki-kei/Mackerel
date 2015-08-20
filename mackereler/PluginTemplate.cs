@@ -5,7 +5,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet {
 /*
-	[ApiVersion(1, 20)]
+	[ApiVersion(1, 21)]
 	public class Plugin : TerrariaPlugin {
 
 		public Plugin(Main game)
