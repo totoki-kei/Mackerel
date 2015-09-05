@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hypermarket", "Hypermarket\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemBroadcast", "ItemBroadcast\ItemBroadcast.csproj", "{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoJP", "FuckinJap\NoJP.csproj", "{12BD8153-BFD2-45E0-83F0-CE7426F33389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,17 @@ Global
 		{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}.Release|x86.ActiveCfg = Release|x86
 		{EF86A6F7-8BC8-4B93-BE7A-AC3515C309C4}.Release|x86.Build.0 = Release|x86
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Release|x86.ActiveCfg = Release|x86
+		{12BD8153-BFD2-45E0-83F0-CE7426F33389}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
