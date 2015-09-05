@@ -5,6 +5,8 @@ using TerrariaApi.Server;
 using TS = TShockAPI;
 using System.Linq;
 
+using Common = MackerelPluginSet.Common;
+
 namespace MackerelPluginSet.Hypermarket {
 //*
 	[ApiVersion(1, 21)]
@@ -18,47 +20,68 @@ namespace MackerelPluginSet.Hypermarket {
 
 			TS.TShock.Log.ConsoleInfo("Mackerel Hypermarket Plugin is loaded.");
 
-			TerrariaApi.Server.ServerApi.Hooks.NpcSpawn.Register(this, new HookHandler<NpcSpawnEventArgs>(onNpcSpawn));
+			TerrariaApi.Server.ServerApi.Hooks.GameUpdate.Register(this, new HookHandler<EventArgs>(onGameUpdate));
 
-			//TS.GetDataHandlers.TogglePvp.Register(new EventHandler<TS.GetDataHandlers.TogglePvpEventArgs>(h));
 		}
 
-		private void h(object sender, TS.GetDataHandlers.TogglePvpEventArgs e) {
-			var p = TS.TShock.Players[e.PlayerId];
+		int npcIndex = -1;
+		double nextShuffleTime = 0.0;
 
-			for (int i = 0; i < 360; i++) {
-				double rad = i * Math.PI / 180;
-				float vx = 4 * (float)Math.Cos(rad);
-				float vy = 4 * (float)Math.Sin(rad);
-				Projectile.NewProjectile(p.X, p.Y, vx, vy, 110, 1, 9999, 0);
+		private readonly Tuple<bool, double> night2000 = Common.Utility.ConvertTimeInHourToGameTime(20);
+
+		private void onGameUpdate(EventArgs args) {
+			//if (!NPC.travelNPC) {
+			//	npcIndex = -1;
+			//	nextShuffleTime = 0;
+			//	return;
+			//}
+
+			if (npcIndex == -1) {
+				if ((npcIndex = NPC.FindFirstNPC(Terraria.ID.NPCID.TravellingMerchant)) == -1) {
+					nextShuffleTime = 0.0;
+					return;
+				}
 			}
-		}
 
-		private void onNpcSpawn(NpcSpawnEventArgs args) {
-			var Npc = Main.npc[args.NpcId];
-			Debug.WriteLine("{0} : {1}", Npc.type, Npc.name);
-			if (Npc.type == 368 /* Traveling Merchant */) {
-				Shuffle();
 
-				NetMessage.SendTravelShop();
-
+			if (Main.dayTime) {
+				if (Main.time >= nextShuffleTime) {
+					// ゲーム内時間1800秒(30分)、実時間30秒ごとにシャッフル
+					nextShuffleTime = Math.Floor(Main.time / 1800) * 1800 + 1800;
+					Shuffle();
+					NetMessage.SendTravelShop();
+				}
+			}
+			else {
+				TS.TSPlayer.Server.StrikeNPC(npcIndex, 99999, 0, 0);
 			}
 		}
 
 		private static void Shuffle() {
-			for (int i = 0; i < Chest.maxItems; i++) {
-				int id;
-				do {
-					id = Main.rand.Next(Terraria.ID.ItemID.PlatinumBow, Terraria.ID.ItemID.Count);
-					var item = TS.TShock.Utils.GetItemById(id);
-					if (TS.TShock.Itembans.ItemIsBanned(item.name)) continue;
-				} while (Main.travelShop.Contains(id));
+			int itemNum = 5 + Main.rand.Next(0, Terraria.Chest.maxItems - 5);
+			for (int i = 0; i < Terraria.Chest.maxItems; i++) {
+				int id = 0;
+				if (i < itemNum) {
+					while(true) {
+						// Phasesaber系6種類はマイナスのインデックスが割り当てられている
+						id = Main.rand.Next(-6, Terraria.ID.ItemID.Count);
+						if (id < 0) id -= 18;
+
+						var item = TS.TShock.Utils.GetItemById(id);
+						if (item.type == 0) continue;
+						if (item.value == 0) continue; // 無料のものは並べない
+						if (TS.TShock.Itembans.ItemIsBanned(item.name)) continue;
+						if (Main.travelShop.Contains(id)) continue;
+
+						break;
+					}
+				}
 				Main.travelShop[i] = id;
 			}
 		}
 
 		public override Version Version {
-			get { return new Version("1.0.1"); }
+			get { return new Version("1.1.0"); }
 		}
 		public override string Name {
 			get { return "Mackerel Hypermarket Plugin"; }

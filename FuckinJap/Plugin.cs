@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using Terraria;
 using TerrariaApi.Server;
 using TS = TShockAPI;
+using Common = MackerelPluginSet.Common;
 
 namespace MackerelPluginSet.NoJP {
 
@@ -14,51 +15,11 @@ namespace MackerelPluginSet.NoJP {
 	public class Plugin : TerrariaPlugin {
 
 		[Serializable]
+		[Common.ConfigurationFile("NoJP.xml")]
 		public class Configuration {
 			public bool Enabled = false;
 			public string LoginKickMessage = "this server is not for you.";
 			public string ChatKickMessage = "this server is not for you.";
-
-			[XmlIgnore]
-			public static readonly string ConfigurationFileName = "NoJP.xml";
-
-			public Configuration() { }
-
-			public static Configuration Load() {
-				XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
-				Configuration cfg = null;
-				if (!File.Exists(ConfigurationFileName)) {
-					// ファイルがない
-
-					cfg = new Configuration(); // 初期値
-					try {
-						// 初期値のファイルを作成
-						using (var f = File.OpenWrite(ConfigurationFileName)) {
-							serializer.Serialize(f, cfg);
-						}
-					}
-					catch (IOException) {
-						// にぎりつぶす
-					}
-				}
-				else {
-					try {
-						using (var f = File.OpenRead(ConfigurationFileName)) {
-							cfg = serializer.Deserialize(f) as Configuration;
-						}
-					}
-					catch (IOException) {
-						// デフォルト値を返す
-						cfg = new Configuration();
-					}
-
-				}
-
-				return cfg;
-
-			}
-
-
 		}
 
 		Configuration config;
@@ -68,7 +29,7 @@ namespace MackerelPluginSet.NoJP {
 		}
 
 		public override void Initialize() {
-			config = Configuration.Load();
+			config = Common.Configuration.Load<Configuration>(Common.ConfigurationLoadMode.CreateIfFailed);
 
 			ServerApi.Hooks.ServerJoin.Register(this, ServerHooks_Join);
 			ServerApi.Hooks.ServerChat.Register(this, ServerHooks_Chat);
@@ -79,7 +40,7 @@ namespace MackerelPluginSet.NoJP {
 		}
 
 		void GeneralHooks_ReloadEvent(TS.Hooks.ReloadEventArgs e) {
-			config = Configuration.Load();
+			config = Common.Configuration.Load<Configuration>(Common.ConfigurationLoadMode.CreateIfFailed);
 		}
 
 		private void ServerHooks_Chat(ServerChatEventArgs args) {
