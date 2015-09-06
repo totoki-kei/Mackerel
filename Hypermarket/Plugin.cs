@@ -24,7 +24,6 @@ namespace MackerelPluginSet.Hypermarket {
 
 		}
 
-		int npcIndex = -1;
 		double nextShuffleTime = 0.0;
 
 		private readonly Tuple<bool, double> night2000 = Common.Utility.ConvertTimeInHourToGameTime(20);
@@ -36,13 +35,6 @@ namespace MackerelPluginSet.Hypermarket {
 			//	return;
 			//}
 
-			if (npcIndex == -1) {
-				if ((npcIndex = NPC.FindFirstNPC(Terraria.ID.NPCID.TravellingMerchant)) == -1) {
-					nextShuffleTime = 0.0;
-					return;
-				}
-			}
-
 
 			if (Main.dayTime) {
 				if (Main.time >= nextShuffleTime) {
@@ -53,8 +45,10 @@ namespace MackerelPluginSet.Hypermarket {
 				}
 			}
 			else {
-				TS.TSPlayer.Server.StrikeNPC(npcIndex, 99999, 0, 0);
-				npcIndex = -1;
+				int npcIndex = NPC.FindFirstNPC(Terraria.ID.NPCID.TravellingMerchant);
+				if (npcIndex != -1) {
+					TS.TSPlayer.Server.StrikeNPC(npcIndex, 99999, 0, 0);
+				}
 			}
 		}
 
