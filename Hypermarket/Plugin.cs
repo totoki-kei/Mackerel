@@ -54,6 +54,7 @@ namespace MackerelPluginSet.Hypermarket {
 			}
 			else {
 				TS.TSPlayer.Server.StrikeNPC(npcIndex, 99999, 0, 0);
+				npcIndex = -1;
 			}
 		}
 
