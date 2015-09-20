@@ -42,12 +42,14 @@ namespace MackerelPluginSet.Hypermarket {
 					nextShuffleTime = Math.Floor(Main.time / 1800) * 1800 + 1800;
 					Shuffle();
 					NetMessage.SendTravelShop();
+					TS.TShock.Log.ConsoleInfo("<Hyptemarket> Travelling merchant shuffled.");
 				}
 			}
 			else {
 				int npcIndex = NPC.FindFirstNPC(Terraria.ID.NPCID.TravellingMerchant);
 				if (npcIndex != -1) {
 					TS.TSPlayer.Server.StrikeNPC(npcIndex, 99999, 0, 0);
+					TS.TShock.Log.ConsoleInfo("<Hyptemarket> Travelling merchant is killed.");
 				}
 			}
 		}
