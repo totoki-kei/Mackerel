@@ -4,7 +4,7 @@ using TerrariaApi.Server;
 using TS = TShockAPI;
 
 namespace MackerelPluginSet.Cooltime {
-	//*
+	/*
 		[ApiVersion(1, 21)]
 		public class Plugin : TerrariaPlugin {
 
