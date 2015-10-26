@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace MackerelPluginSet.HandlerDebug {
 #if DEBUG
-	[ApiVersion(1, 21)]
+	[ApiVersion(1, 22)]
 	public class Plugin : TerrariaPlugin {
 
 		bool enabled = false;

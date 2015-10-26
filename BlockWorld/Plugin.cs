@@ -8,7 +8,7 @@ using TerrariaApi.Server;
 using TS = TShockAPI;
 
 namespace MackerelPluginSet.ItemJack {
-	[ApiVersion(1, 21)]
+	[ApiVersion(1, 22)]
 	public class Plugin : TerrariaPlugin {
 		TS.Command originalItemCommand;
 		TS.Command originalGiveCommand;

@@ -11,7 +11,7 @@ using Common = MackerelPluginSet.Common;
 namespace MackerelPluginSet.NoJP {
 
 	//*
-	[ApiVersion(1, 21)]
+	[ApiVersion(1, 22)]
 	public class Plugin : TerrariaPlugin {
 
 		[Serializable]

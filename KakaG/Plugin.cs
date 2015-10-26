@@ -10,7 +10,7 @@ using TS = TShockAPI;
 
 namespace MackerelPluginSet.KakaG {
 
-	[ApiVersion(1, 21)]
+	[ApiVersion(1, 22)]
 	public class Plugin : TerrariaPlugin {
 		Configuration conf;
 
@@ -92,7 +92,8 @@ namespace MackerelPluginSet.KakaG {
 				// Godmode中にPvPダメージ受けたら
 
 				// 凍らせて
-				player.Disable();
+				//player.Disable();
+				player.Disable(flags: TShockAPI.DisableFlags.WriteToLogAndConsole);
 
 				// あいだをおいて ころす
 				Task t = new Task(() => { Thread.Sleep(3000); player.DamagePlayer(9999); });
